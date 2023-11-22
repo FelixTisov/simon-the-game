@@ -94,7 +94,7 @@ export default {
   methods: {
     // Начать игру
     startGame() {
-      this.playSound(this.soundFiles[0], 'unlock')
+      this.playSound(0, 'unlock')
       this.isGameOver = false
       this.round = 1
       this.generatedSubsequence = []
@@ -108,7 +108,7 @@ export default {
     async handleClick(index) {
       if (this.canUserClick) {
         this.userSubsequence.push(index)
-        this.playSound(this.soundFiles[index])
+        this.playSound(index)
 
         if (this.checkUserSequence()) {
           // Если пользователь ввел всю последовательности текущего раунда, переходим на следующий
@@ -126,13 +126,14 @@ export default {
       }
     },
     // Воспроизведение звука
-    playSound(soundFile, type) {
-      const audio = new Audio(soundFile)
+    playSound(index, type) {
+      const audio = new Audio()
       // Необходимо, чтобы разрешить автовоспроизведение на IOS
       if (type === 'unlock') {
-        audio.src = '/sounds/empty.mp3'
+        audio.src = require('../sounds/empty.mp3')
         audio.muted = true
       } else {
+        audio.src = require(`../sounds/${index + 1}.mp3`)
         audio.muted = false
       }
       audio.play().catch((error) => console.error(error))
@@ -160,7 +161,7 @@ export default {
       this.generatedSubsequence.push(this.chooseRandomSquare())
 
       for (const index of this.generatedSubsequence) {
-        this.playSound(this.soundFiles[index])
+        this.playSound(index)
 
         await this.animateSquare(
           index,
