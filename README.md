@@ -1,4 +1,4 @@
-# Slient-The-Game
+# Simon-The-Game
 
 Simon Says is a memory game where players must replicate a sequence of illuminated squares. The game consists of a grid with four colored squares, each emitting a unique tone when activated.
 
